@@ -33,9 +33,9 @@ export default function OrderLookup() {
         <label htmlFor="lookup-code" className="sr-only">Mã đơn hàng</label>
         <input id="lookup-code" value={code} onChange={(e) => setCode(e.target.value)}
           placeholder="Nhập mã đơn (vd: CF-ABC123)" autoComplete="off"
-          className="flex-1 rounded-full border border-line bg-white px-5 py-3.5 font-bold uppercase text-ink outline-none placeholder:normal-case placeholder:font-normal placeholder:text-ink-soft/60 focus:border-primary focus:ring-2 focus:ring-primary/30"
+          className="min-w-0 flex-1 rounded-full border border-line bg-white px-5 py-3.5 font-bold uppercase text-ink outline-none placeholder:normal-case placeholder:font-normal placeholder:text-ink-soft/60 focus:border-primary focus:ring-2 focus:ring-primary/30"
         />
-        <button type="submit" className="shrink-0 rounded-full bg-primary px-6 py-3.5 text-sm font-bold text-white transition hover:bg-primary-deep">
+        <button type="submit" className="shrink-0 rounded-full bg-primary px-5 py-3.5 text-sm font-bold text-white transition hover:bg-primary-deep">
           Tra cứu
         </button>
       </form>

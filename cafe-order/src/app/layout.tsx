@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/hooks/use-cart";
@@ -20,6 +20,12 @@ const playfairDisplay = Playfair_Display({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#F6F6F3",
+};
 export const metadata: Metadata = {
   title: {
     default: "AROFine — Fine Coffee & Tea | Đặt món online",
@@ -33,7 +39,6 @@ export const metadata: Metadata = {
     locale: "vi_VN",
     type: "website",
   },
-  themeColor: "#F6F6F3",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

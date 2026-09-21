@@ -23,6 +23,14 @@ body {
   color: var(--color-ink);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Bỏ delay 300ms khi tap trên mobile */
+a,
+button {
+  touch-action: manipulation;
 }
 
 input,

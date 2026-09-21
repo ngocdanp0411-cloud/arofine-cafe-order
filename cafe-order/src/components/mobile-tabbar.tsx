@@ -44,7 +44,7 @@ export default function MobileTabbar() {
   return (
     <nav
       aria-label="Điều hướng chính"
-      className="fixed inset-x-4 bottom-4 z-40 md:hidden"
+      className="fixed inset-x-4 bottom-4 z-40 [margin-bottom:env(safe-area-inset-bottom)] md:hidden"
     >
       <div className="flex items-center justify-between gap-1 rounded-full border border-line bg-white/90 px-2 py-2 shadow-[0_12px_40px_rgba(28,30,44,0.14)] backdrop-blur-xl">
         {TABS.map((tab) => {

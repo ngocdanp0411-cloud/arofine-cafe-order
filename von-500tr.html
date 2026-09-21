@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vốn 500tr + hòa vốn — Trà 40m2</title>
+<style>*{box-sizing:border-box}body{font-family:system-ui,sans-serif;margin:0;background:#faf7f2;padding:16px;color:#222}h1{font-size:19px;margin:0 0 4px}.sub{color:#666;font-size:13px;margin:0 0 12px}.wrap{max-width:600px;margin:auto}.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid #eee;padding:7px 4px;text-align:right}td:first-child,th:first-child{text-align:left}.tot{font-weight:800;font-size:15px}input[type=range]{width:100%}.kpi{display:flex;gap:8px}.k{flex:1;background:#111;color:#fff;border-radius:10px;padding:10px;text-align:center}.k b{font-size:18px;display:block}.warn{background:#fff3e0;border:1px solid #e65100;border-radius:10px;padding:10px;font-size:13px;line-height:1.5}</style></head>
+<body><div class="wrap">
+<h1>Bảng vốn 500tr + điểm hòa vốn</h1>
+<p class="sub">Kéo slider — số nhảy theo. Giá quầy TB, ship = giá quầy x 1.28 (gánh phí sàn 25%).</p>
+<div class="card"><table>
+<tr><th>Hạng mục</th><th>Số tiền</th></tr>
+<tr><td>Cọc + thuê 3 tháng (20tr/th)</td><td>60tr</td></tr>
+<tr><td>Đập kính + cải tạo + biển + đèn</td><td>130tr</td></tr>
+<tr><td>Máy (ủ trà, dập auto, đá 60kg, tủ, POS)</td><td>105tr</td></tr>
+<tr><td>Bao bì + NPL khai trương</td><td>45tr</td></tr>
+<tr><td>Lương 4 người x 3 tháng (~7.5tr/ng)</td><td>90tr</td></tr>
+<tr><td>Dự phòng + marketing khai trương</td><td>70tr</td></tr>
+<tr><td class="tot">Tổng</td><td class="tot">500tr</td></tr>
+</table></div>
+<div class="card">
+<label>Giá ly TB tại quầy: <b id="pv">45k</b></label><input id="price" type="range" min="35" max="55" value="45" step="1">
+<label>Tỉ lệ ship qua app: <b id="sv">60%</b></label><input id="ship" type="range" min="0" max="90" value="60" step="5">
+<label>Ly/ngày: <b id="cv">220</b></label><input id="cups" type="range" min="80" max="400" value="220" step="10">
+<div class="kpi" style="margin-top:10px">
+<div class="k">Doanh thu/tháng<b id="rev">—</b></div>
+<div class="k">Lợi nhuận/tháng<b id="pro">—</b></div>
+<div class="k">Hoàn vốn<b id="pay">—</b></div>
+</div></div>
+<div class="warn" id="msg"></div>
+<script>
+const f=n=>Math.round(n).toLocaleString('vi-VN')+'đ';
+function calc(){const p=+price.value,s=+ship.value/100,c=+cups.value;
+pv.textContent=p+'k';sv.textContent=ship.value+'%';cv.textContent=c;
+const pq=p*1000, pa=pq*1.28; // giá app
+const revDay=c*((1-s)*pq+s*pa*0.75); // app bị sàn ăn 25%
+const rev=revDay*30, cogs=rev*0.28, rent=20e6, staff=30e6, other=10e6;
+const pro=rev-cogs-rent-staff-other;
+revEl.textContent=f(rev);proEl.textContent=f(pro);
+const inv=350e6; // phần phải thu hồi (trừ dự phòng quay vòng)
+payEl=pro>0?Math.ceil(inv/pro)+' th':"lỗ";
+pay.textContent=payEl;
+msg.innerHTML=`• Cần <b>${c} ly/ngày</b> giá TB ${p}k, ship ${ship.value}% → DThu ~<b>${f(rev)}/th</b>, lãi ~<b>${f(pro)}/th</b>, hoàn 350tr sau <b>${payEl}</b>.`+(pro<35e6?`<br>• <b>Cảnh báo:</b> lãi <35tr/th thì quá 10 tháng mới hòa vốn 8–12 tháng như mục tiêu — phải tăng ly hoặc giảm ship.`:`<br>• Đạt mục tiêu hòa vốn 8–12 tháng. Giữ COGS ≤28%, thuê ≤10%, phí sàn ≤15% DThu ship.`);
+}
+const price=document.getElementById('price'),ship=document.getElementById('ship'),cups=document.getElementById('cups');
+const pv=document.getElementById('pv'),sv=document.getElementById('sv'),cv=document.getElementById('cv');
+const revEl=document.getElementById('rev'),proEl=document.getElementById('pro'),pay=document.getElementById('pay'),msg=document.getElementById('msg');
+[price,ship,cups].forEach(e=>e.oninput=calc);calc();
+</script>
+</div></body></html>

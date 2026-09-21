@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D Phúc Tea Tinh gọn 5x8 + vỉa hè 4m</title>
+<style>*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:system-ui,sans-serif;background:#0f0f12;color:#fff;overflow:hidden}#c{position:fixed;inset:0}#ui{position:fixed;top:10px;left:10px;right:10px;display:flex;gap:8px;flex-wrap:wrap;z-index:5}.btn{background:#fff;color:#111;border:none;border-radius:20px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer}.btn.on{background:#ffb300;color:#111}#info{position:fixed;left:10px;bottom:10px;right:10px;z-index:5;background:rgba(0,0,0,.72);border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.55}#info b{color:#ffd54f}.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;margin-right:4px;color:#111}</style>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+</head><body><div id="c"></div>
+<div id="ui">
+<button class="btn on" id="bRot">Xoay tự động</button>
+<button class="btn" id="bTop">Nhìn từ trên</button>
+<button class="btn" id="bFront">Nhìn mặt tiền</button>
+<button class="btn" id="bIn">Vào quầy bar</button>
+</div>
+<div id="info"><b>PHÚC TEA Tinh gọn — 5x8 + vỉa hè 4m. Kéo xoay • cuộn zoom.</b><br>
+<span class="tag" style="background:#43a047">vỉa hè: xe khách trái / shipper phải</span>
+<span class="tag" style="background:#ffb300">quầy pha tươi 4m</span>
+<span class="tag" style="background:#ce93d8">kho + WC cuối</span><br>
+Chuẩn Tinh gọn 25-40m2 • 4-8 người • menu từ 24k • signature Khoai Môn Quết + Full Topping • mục tiêu 120-250tr/th, hoàn vốn 9-12th.</div>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+const box=(w,h,d,c,x,y,z)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshStandardMaterial({color:c,roughness:.85}));m.position.set(x,y,z);scene.add(m);return m;};
+const label=(t,x,y,z,bg='#111')=>{const cv=document.createElement('canvas');cv.width=320;cv.height=80;const g=cv.getContext('2d');g.fillStyle=bg;g.fillRect(0,0,320,80);g.fillStyle='#111';g.font='bold 25px system-ui';g.textAlign='center';g.fillText(t,160,50);const tx=new THREE.CanvasTexture(cv);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tx}));s.scale.set(2.1,.55,1);s.position.set(x,y,z);scene.add(s);};
+const labelW=(t,x,y,z,bg='#111')=>{const cv=document.createElement('canvas');cv.width=320;cv.height=80;const g=cv.getContext('2d');g.fillStyle=bg;g.fillRect(0,0,320,80);g.fillStyle='#fff';g.font='bold 25px system-ui';g.textAlign='center';g.fillText(t,160,50);const tx=new THREE.CanvasTexture(cv);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tx}));s.scale.set(2.1,.55,1);s.position.set(x,y,z);scene.add(s);};
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x141419);
+const cam=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,200);cam.position.set(8,7,12);
+const ren=new THREE.WebGLRenderer({antialias:true});ren.setSize(innerWidth,innerHeight);document.getElementById('c').appendChild(ren.domElement);
+const ctl=new OrbitControls(cam,ren.domElement);ctl.target.set(0,0,1);ctl.autoRotate=true;ctl.maxPolarAngle=1.45;
+scene.add(new THREE.HemisphereLight(0xffffff,0x333344,1.1));
+const sun=new THREE.DirectionalLight(0xfff2dd,1.6);sun.position.set(6,10,6);scene.add(sun);
+const shopFloor=new THREE.Mesh(new THREE.BoxGeometry(5,.1,8),new THREE.MeshStandardMaterial({color:0xf5efe6}));shopFloor.position.set(0,0,0);scene.add(shopFloor);
+const side=new THREE.Mesh(new THREE.BoxGeometry(5,.08,4),new THREE.MeshStandardMaterial({color:0x9aa0a6}));side.position.set(0,-.01,6);scene.add(side);
+for(let i=0;i<4;i++){box(.35,.7,.9,0x37474f,-2+i*.6,.4,6);} labelW('XE KHACH',-1.2,1.2,6,'#2e7d32');
+for(let i=0;i<3;i++){box(.35,.7,.9,0xe65100,1.2+i*.6,.4,6);} labelW('SHIPPER',1.8,1.2,6,'#e65100');
+box(5,2.6,.15,0xfaf6ef,0,1.3,-4);
+box(.15,2.6,8,0xfaf6ef,-2.5,1.3,0);box(.15,2.6,8,0xfaf6ef,2.5,1.3,0);
+box(5,.9,.12,0xffb300,0,2.9,4);label('PHUC TEA • LAN TOA HANH PHUC',0,2.9,4.15,'#ffb300');
+const glass=new THREE.Mesh(new THREE.BoxGeometry(3.5,1.8,.05),new THREE.MeshStandardMaterial({color:0xbfe3f5,transparent:true,opacity:.45}));glass.position.set(-.4,1.1,4);scene.add(glass);
+box(.8,1.8,.06,0xff9800,1.9,1.1,4);labelW('O SHIP',1.9,2.3,4,'#e65100');
+box(4,.9,.7,0x6d4c41,0,.45,1.2);box(4,.06,.75,0xffffff,0,.93,1.2);
+labelW('POS',-1.5,1.5,1.2,'#1565c0');box(.5,.35,.4,0x90caf9,-1.5,1.15,1.2);
+labelW('PHA TUOI',0,1.5,1.2,'#6d4c41');box(.6,.4,.45,0xd7ccc8,-.3,1.2,1.2);box(.6,.4,.45,0xd7ccc8,.4,1.2,1.2);
+labelW('DAP NAP',1.5,1.5,1.2,'#2e7d32');box(.55,.45,.45,0xa5d6a7,1.5,1.2,1.2);
+box(1.4,1.8,.8,0x90a4ae,-1.5,1,-1.5);labelW('TU MAT',-1.5,2.1,-1.5);
+box(.9,.9,.9,0x78909c,.2,.5,-1.8);labelW('MAY DA 3 pha',.2,1.3,-1.8);
+box(1.2,.8,.6,0xcfd8dc,1.6,.4,-1.5);labelW('BON RUA',1.6,1.1,-1.5);
+for(let i=0;i<4;i++){box(.4,.45,.4,0xffd54f,-2.1,.25,-.5-i*.7);}label('8 GHE CHO',-2.1,1,-2,'#ffb300');
+box(1.8,2,.15,0x8d6e63,1.2,1,-3.4);labelW('KHO 3m2',1.2,2.3,-3.2,'#5d4037');
+box(1.6,2,1.4,0xb0bec5,-1.4,1,-3.2);labelW('WC',-1.4,2.3,-3.2,'#455a64');
+for(let i=0;i<3;i++){box(.9,.5,.06,0x212121,-1.2+i*1.2,2,-3.9);}
+labelW('KHOAI MON QUET',-1.2,2.5,-3.85,'#6a1b9a');labelW('FULL TOPPING',0,2.5,-3.85,'#212121');labelW('MENU TU 24K',1.2,2.5,-3.85,'#ffb300');
+function go(x,y,z,tx,ty,tz){cam.position.set(x,y,z);ctl.target.set(tx,ty,tz);}
+bRot.onclick=()=>{ctl.autoRotate=!ctl.autoRotate;bRot.classList.toggle('on',ctl.autoRotate);};
+bTop.onclick=()=>go(0,15,1.5,0,0,1);
+bFront.onclick=()=>go(0,2,13,0,1.2,2);
+bIn.onclick=()=>go(0,1.6,3.4,0,1,-1);
+addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();ren.setSize(innerWidth,innerHeight);});
+(function loop(){requestAnimationFrame(loop);ctl.update();ren.render(scene,cam);})();
+</script></body></html>
